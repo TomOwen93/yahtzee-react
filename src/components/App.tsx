@@ -1,11 +1,18 @@
-import { MyComponent } from "./MyComponent";
+import { Card, Container, Heading } from "@chakra-ui/react";
 import "./App.css";
+import GameSection from "./GameSection";
 
-function App() {
+function App(): JSX.Element {
     return (
-        <div className="App">
-            <MyComponent />
-        </div>
+        <>
+            <Container>
+                <Card>
+                    <Heading textAlign={"center"}>Lets Play Yahtzee!</Heading>
+                </Card>
+
+                <GameSection />
+            </Container>
+        </>
     );
 }
 
