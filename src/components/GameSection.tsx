@@ -90,14 +90,14 @@ export default function GameSection(): JSX.Element {
                 break;
             case "next-turn":
                 state.rollsLeft = 3;
-                (state.rolledDice = [
+                state.rolledDice = [
                     { id: 1, roll: null },
                     { id: 2, roll: null },
                     { id: 3, roll: null },
                     { id: 4, roll: null },
                     { id: 5, roll: null },
-                ]),
-                    (state.keptDice = []);
+                ];
+                state.keptDice = [];
         }
     };
 
