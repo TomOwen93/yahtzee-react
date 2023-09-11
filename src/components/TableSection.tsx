@@ -102,7 +102,7 @@ export default function TableSection({
                                             {potentialScores[
                                                 row as keyof PotentialFullScoring
                                             ] === 0
-                                                ? ""
+                                                ? 0
                                                 : potentialScores[
                                                       row as keyof PotentialFullScoring
                                                   ]}
