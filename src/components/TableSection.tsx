@@ -9,18 +9,25 @@ import {
 } from "@chakra-ui/react";
 import { GameState, PotentialFullScoring } from "../types";
 import { Action } from "./GameSection";
+import { CombinedSectionLookup } from "./ScoreTable";
 
 export interface TableSectionProps {
     section: number;
     playersScores: PotentialFullScoring;
-    sectionLookUp: any;
+    sectionLookUp: CombinedSectionLookup;
     dispatch: React.Dispatch<Action>;
     potentialScores: PotentialFullScoring;
     gameState: GameState;
     handleToast: (
         title: string,
         description: string,
-        status: string,
+        status:
+            | "info"
+            | "warning"
+            | "success"
+            | "error"
+            | "loading"
+            | undefined,
         duration: number
     ) => void;
 }
@@ -48,7 +55,13 @@ export default function TableSection({
                     <Tbody>
                         {Object.keys(sectionLookUp).map((row, index) => (
                             <Tr key={index}>
-                                <Td>{sectionLookUp[row]}</Td>
+                                <Td>
+                                    {
+                                        sectionLookUp[
+                                            row as keyof CombinedSectionLookup
+                                        ]
+                                    }
+                                </Td>
                                 {playersScores[
                                     row as keyof PotentialFullScoring
                                 ] !== null ? (

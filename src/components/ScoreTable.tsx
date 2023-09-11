@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { GameState, PotentialFullScoring } from "../types";
 import { Action } from "./GameSection";
-import { callToast } from "../utils/callToast";
+
 import TableSection from "./TableSection";
 
 interface ScoreTableProps {
@@ -10,29 +10,34 @@ interface ScoreTableProps {
     potentialScores: PotentialFullScoring;
 }
 
+const sectionOneLookUps = {
+    ones: "Ones ⚀",
+    twos: "Twos ⚁",
+    threes: "Threes ⚂",
+    fours: "Fours ⚃",
+    fives: "Fives ⚄",
+    sixes: "Sixes ⚅",
+};
+const sectionTwoLookUps = {
+    threeOfAKind: "Three of a Kind",
+    fourOfAKind: "Four of a Kind",
+    fullHouse: "Full House",
+    smallStraight: "Small Straight",
+    largeStraight: "Large Straight",
+    yahtzee: "Yahtzee",
+    chance: "Chance",
+};
+
+type SectionOneLookUpType = typeof sectionOneLookUps;
+type SectionTwoLookUpType = typeof sectionTwoLookUps;
+
+export type CombinedSectionLookup = SectionOneLookUpType | SectionTwoLookUpType;
+
 export default function ScoreTable({
     gameState,
     dispatch,
     potentialScores,
 }: ScoreTableProps): JSX.Element {
-    const sectionOneLookUps = {
-        ones: "Ones ⚀",
-        twos: "Twos ⚁",
-        threes: "Threes ⚂",
-        fours: "Fours ⚃",
-        fives: "Fives ⚄",
-        sixes: "Sixes ⚅",
-    };
-    const sectionTwoLookUps = {
-        threeOfAKind: "Three of a Kind",
-        fourOfAKind: "Four of a Kind",
-        fullHouse: "Full House",
-        smallStraight: "Small Straight",
-        largeStraight: "Large Straight",
-        yahtzee: "Yahtzee",
-        chance: "Chance",
-    };
-
     const playersScores = gameState.Player1.scoringChecks;
 
     const toast = useToast();
@@ -40,11 +45,22 @@ export default function ScoreTable({
     const handleToast = (
         title: string,
         description: string,
-        status: string,
+        status:
+            | "info"
+            | "warning"
+            | "success"
+            | "error"
+            | "loading"
+            | undefined,
         duration: number
-    ) => {
-        callToast(toast, title, description, status, duration);
-    };
+    ) =>
+        toast({
+            title,
+            description,
+            status,
+            duration,
+            isClosable: true,
+        });
 
     return (
         <>

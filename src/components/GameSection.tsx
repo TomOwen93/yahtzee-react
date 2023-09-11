@@ -80,13 +80,9 @@ export default function GameSection(): JSX.Element {
                 break;
 
             case "lock-in-score":
-                const payload = action.payload;
-                const chosenScoreToUpdate =
-                    payload.key as keyof PotentialFullScoring;
-                const chosenScoreValue = payload.value;
-
-                state.Player1.scoringChecks[chosenScoreToUpdate] =
-                    chosenScoreValue;
+                state.Player1.scoringChecks[
+                    action.payload.key as keyof PotentialFullScoring
+                ] = action.payload.value;
                 break;
             case "next-turn":
                 state.rollsLeft = 3;
