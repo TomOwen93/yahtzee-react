@@ -1,45 +1,57 @@
-import { Button, Text, VStack } from "@chakra-ui/react";
+import { Button, Text, VStack, Card, Heading } from "@chakra-ui/react";
 import { useImmerReducer } from "use-immer";
+import ScoreTable from "./ScoreTable";
+import {
+    RollDiceAction,
+    KeepDiceAction,
+    GameState,
+    ReturnDiceAction,
+    LockInScoreAction,
+    DiceRoll,
+    PotentialFullScoring,
+    NextTurnAction,
+} from "../types";
+import { calculatePotentialScores } from "../utils/calculatePotentialScores";
 
-interface Action {
-    type: "roll-dice";
-    payload?: GameState | number | string;
-}
-
-type Dice = {
-    id: number;
-    roll: undefined | number;
-};
-
-interface GameState {
-    gameTurn: number;
-    currentPlayer: number;
-    rollsLeft: number;
-    dice: Dice[];
-    gameOver: boolean;
-    playerScores: {
-        player1: number;
-        player2: number;
-    };
-}
+export type Action =
+    | RollDiceAction
+    | KeepDiceAction
+    | ReturnDiceAction
+    | LockInScoreAction
+    | NextTurnAction;
 
 export default function GameSection(): JSX.Element {
     const initialState: GameState = {
         gameTurn: 0,
-        currentPlayer: 1,
         rollsLeft: 3,
-        dice: [
-            { id: 1, roll: undefined },
-            { id: 2, roll: undefined },
-            { id: 3, roll: undefined },
-            { id: 4, roll: undefined },
-            { id: 5, roll: undefined },
+        rolledDice: [
+            { id: 1, roll: null },
+            { id: 2, roll: null },
+            { id: 3, roll: null },
+            { id: 4, roll: null },
+            { id: 5, roll: null },
         ],
-        gameOver: false,
-        playerScores: {
-            player1: 0,
-            player2: 0,
+        Player1: {
+            score: 0,
+            previousYahtzee: false,
+            scoringChecks: {
+                ones: null,
+                twos: null,
+                threes: null,
+                fours: null,
+                fives: null,
+                sixes: null,
+                threeOfAKind: null,
+                fourOfAKind: null,
+                fullHouse: null,
+                smallStraight: null,
+                largeStraight: null,
+                yahtzee: null,
+                chance: null,
+            },
         },
+        keptDice: [],
+        gameRound: 1,
     };
 
     const reducer = (state: GameState, action: Action) => {
@@ -47,29 +59,112 @@ export default function GameSection(): JSX.Element {
             case "roll-dice":
                 if (state.rollsLeft > 0) {
                     state.rollsLeft--;
-                    for (const dice of state.dice) {
-                        dice.roll = Math.ceil(Math.random() * 6);
+                    for (const dice of state.rolledDice) {
+                        dice.roll = Math.ceil(Math.random() * 6) as DiceRoll;
                     }
                 }
+                break;
+            case "keep-dice":
+                if (state.rolledDice.length < 6) {
+                    state.keptDice.push(action.payload);
+                    state.rolledDice = state.rolledDice.filter(
+                        (d) => d.id !== action.payload.id
+                    );
+                }
+                break;
+            case "return-dice":
+                state.rolledDice.push(action.payload);
+                state.keptDice = state.keptDice.filter(
+                    (d) => d.id !== action.payload.id
+                );
+                break;
+
+            case "lock-in-score":
+                const payload = action.payload;
+                const chosenScoreToUpdate =
+                    payload.key as keyof PotentialFullScoring;
+                const chosenScoreValue = payload.value;
+
+                state.Player1.scoringChecks[chosenScoreToUpdate] =
+                    chosenScoreValue;
+                break;
+            case "next-turn":
+                state.rollsLeft = 3;
+                (state.rolledDice = [
+                    { id: 1, roll: null },
+                    { id: 2, roll: null },
+                    { id: 3, roll: null },
+                    { id: 4, roll: null },
+                    { id: 5, roll: null },
+                ]),
+                    (state.keptDice = []);
         }
     };
 
     const [gameState, dispatch] = useImmerReducer(reducer, initialState);
 
+    const combinedDice = gameState.rolledDice.concat(gameState.keptDice);
+    const potentialScores = calculatePotentialScores(
+        combinedDice,
+        gameState.Player1.previousYahtzee
+    );
+
+    const diceEmojis = {
+        1: "⚀",
+        2: "⚁",
+        3: "⚂",
+        4: "⚃",
+        5: "⚄",
+        6: "⚅",
+    };
+
     return (
         <>
             <VStack>
-                <Text>Rolls Left: {gameState.rollsLeft}</Text>
+                <Heading as="h3" size="md">
+                    Rolls Left: {gameState.rollsLeft}
+                </Heading>
                 <Button onClick={() => dispatch({ type: "roll-dice" })}>
                     Roll Dice
                 </Button>
-                <Text>You rolled:</Text>
-                {gameState.dice.map((d) => (
-                    <Button maxW={"2rem"} textAlign={"center"} key={d.id}>
-                        {" "}
-                        {d.roll}
-                    </Button>
-                ))}
+
+                <Card align={"center"} w="400px">
+                    <Text>You rolled:</Text>
+                    {gameState.rollsLeft < 3 &&
+                        gameState.rolledDice.map((d) => (
+                            <Button
+                                onClick={() =>
+                                    dispatch({ type: "keep-dice", payload: d })
+                                }
+                                textAlign={"center"}
+                                key={d.id}
+                                fontSize={"xx-large"}
+                            >
+                                {" "}
+                                {d.roll !== null && diceEmojis[d.roll]}
+                            </Button>
+                        ))}
+                    <Text>Dice Kept:</Text>
+                    {gameState.keptDice.map((d) => (
+                        <Button
+                            onClick={() =>
+                                dispatch({ type: "return-dice", payload: d })
+                            }
+                            textAlign={"center"}
+                            key={d.id}
+                            fontSize={"xx-large"}
+                        >
+                            {" "}
+                            {d.roll !== null && diceEmojis[d.roll]}
+                        </Button>
+                    ))}
+                </Card>
+
+                <ScoreTable
+                    gameState={gameState}
+                    dispatch={dispatch}
+                    potentialScores={potentialScores}
+                />
             </VStack>
         </>
     );
