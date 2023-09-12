@@ -6,9 +6,10 @@ import {
     Th,
     Tbody,
     Td,
+    Text,
+    Tag,
 } from "@chakra-ui/react";
-import { GameState, PotentialFullScoring } from "../types";
-import { Action } from "./GameSection";
+import { Action, GameState, PotentialFullScoring } from "../types";
 import { CombinedSectionLookup } from "./ScoreTable";
 
 export interface TableSectionProps {
@@ -78,7 +79,7 @@ export default function TableSection({
                                     potentialScores &&
                                     gameState.rollsLeft < 3 && (
                                         <Td
-                                            color="tomato"
+                                            color="orange"
                                             cursor={"progress"}
                                             onClick={() => {
                                                 dispatch({
@@ -101,13 +102,15 @@ export default function TableSection({
                                                 );
                                             }}
                                         >
-                                            {potentialScores[
-                                                row as keyof PotentialFullScoring
-                                            ] === 0
-                                                ? 0
-                                                : potentialScores[
-                                                      row as keyof PotentialFullScoring
-                                                  ]}
+                                            {
+                                                <Text as={"u"}>
+                                                    {
+                                                        potentialScores[
+                                                            row as keyof PotentialFullScoring
+                                                        ]
+                                                    }
+                                                </Text>
+                                            }
                                         </Td>
                                     )
                                 )}
@@ -116,8 +119,14 @@ export default function TableSection({
 
                         <Tr>
                             <Td fontWeight="bold">Total Points:</Td>
-                            <Td color={"green"} fontWeight={"bold"}>
-                                {totalScore}
+                            <Td>
+                                <Tag
+                                    fontSize={"1rem"}
+                                    size={"md"}
+                                    colorScheme="yellow"
+                                >
+                                    {totalScore}
+                                </Tag>
                             </Td>
                         </Tr>
                         <Tr>

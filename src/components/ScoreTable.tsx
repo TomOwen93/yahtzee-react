@@ -1,11 +1,11 @@
 import { useToast } from "@chakra-ui/react";
 import {
+    Action,
     GameState,
     PotentialFullScoring,
     PotentialSectionOneScoring,
     PotentialSectionTwoScoring,
 } from "../types";
-import { Action } from "./GameSection";
 
 import TableSection from "./TableSection";
 import { calculateTotals } from "../utils/calculateTotals";
@@ -72,8 +72,6 @@ export default function ScoreTable({
 
     const currentTotalSection1 = calculateTotals(1, playersScores);
     const currentTotalSection2 = calculateTotals(2, playersScores);
-
-    console.log(currentTotalSection1, currentTotalSection2);
 
     return (
         <>

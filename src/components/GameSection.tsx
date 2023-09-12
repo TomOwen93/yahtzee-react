@@ -1,24 +1,8 @@
-import { Button, Text, VStack, Card, Heading } from "@chakra-ui/react";
+import { Button, Text, VStack, Card, Heading, Flex } from "@chakra-ui/react";
 import { useImmerReducer } from "use-immer";
 import ScoreTable from "./ScoreTable";
-import {
-    RollDiceAction,
-    KeepDiceAction,
-    GameState,
-    ReturnDiceAction,
-    LockInScoreAction,
-    DiceRoll,
-    PotentialFullScoring,
-    NextTurnAction,
-} from "../types";
+import { GameState, DiceRoll, PotentialFullScoring, Action } from "../types";
 import { calculatePotentialScores } from "../utils/calculatePotentialScores";
-
-export type Action =
-    | RollDiceAction
-    | KeepDiceAction
-    | ReturnDiceAction
-    | LockInScoreAction
-    | NextTurnAction;
 
 export default function GameSection(): JSX.Element {
     const initialState: GameState = {
@@ -32,7 +16,6 @@ export default function GameSection(): JSX.Element {
             { id: 5, roll: null },
         ],
         Player1: {
-            score: 0,
             previousYahtzee: false,
             scoringChecks: {
                 ones: null,
@@ -48,6 +31,14 @@ export default function GameSection(): JSX.Element {
                 largeStraight: null,
                 yahtzee: null,
                 chance: null,
+            },
+            gameScores: {
+                1: null,
+                2: null,
+                3: null,
+                4: null,
+                5: null,
+                6: null,
             },
         },
         keptDice: [],
@@ -94,6 +85,12 @@ export default function GameSection(): JSX.Element {
                     { id: 5, roll: null },
                 ];
                 state.keptDice = [];
+                break;
+            case "end-game":
+                state.Player1.gameScores[gameState.gameRound] =
+                    playersCurrentScore;
+                state.gameRound = +1;
+                state.Player1.scoringChecks = {} as PotentialFullScoring;
         }
     };
 
@@ -116,6 +113,13 @@ export default function GameSection(): JSX.Element {
         6: "⚅",
     };
 
+    const playersCurrentScore = gameState.Player1.scoringChecks;
+
+    if (Object.values(playersCurrentScore).every((score) => score !== null)) {
+        dispatch({ type: "end-game" });
+        dispatch({ type: "next-turn" });
+    }
+
     return (
         <>
             <VStack>
@@ -126,13 +130,42 @@ export default function GameSection(): JSX.Element {
                     Roll Dice
                 </Button>
 
-                <Card align={"center"} w="400px">
+                <Card
+                    justify={"center"}
+                    align={"center"}
+                    w="30rem"
+                    h="15rem"
+                    gap={"1rem"}
+                >
                     <Text>You rolled:</Text>
-                    {gameState.rollsLeft < 3 &&
-                        gameState.rolledDice.map((d) => (
+                    <Flex gap={"0.75rem"}>
+                        {gameState.rollsLeft < 3 &&
+                            gameState.rolledDice.map((d) => (
+                                <Button
+                                    onClick={() =>
+                                        dispatch({
+                                            type: "keep-dice",
+                                            payload: d,
+                                        })
+                                    }
+                                    textAlign={"center"}
+                                    key={d.id}
+                                    fontSize={"xx-large"}
+                                >
+                                    {" "}
+                                    {d.roll !== null && diceEmojis[d.roll]}
+                                </Button>
+                            ))}
+                    </Flex>
+                    <Text>Dice Kept:</Text>
+                    <Flex gap={"0.75rem"}>
+                        {gameState.keptDice.map((d) => (
                             <Button
                                 onClick={() =>
-                                    dispatch({ type: "keep-dice", payload: d })
+                                    dispatch({
+                                        type: "return-dice",
+                                        payload: d,
+                                    })
                                 }
                                 textAlign={"center"}
                                 key={d.id}
@@ -142,20 +175,7 @@ export default function GameSection(): JSX.Element {
                                 {d.roll !== null && diceEmojis[d.roll]}
                             </Button>
                         ))}
-                    <Text>Dice Kept:</Text>
-                    {gameState.keptDice.map((d) => (
-                        <Button
-                            onClick={() =>
-                                dispatch({ type: "return-dice", payload: d })
-                            }
-                            textAlign={"center"}
-                            key={d.id}
-                            fontSize={"xx-large"}
-                        >
-                            {" "}
-                            {d.roll !== null && diceEmojis[d.roll]}
-                        </Button>
-                    ))}
+                    </Flex>
                 </Card>
 
                 <ScoreTable
