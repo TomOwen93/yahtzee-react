@@ -11,7 +11,6 @@ import {
     PopoverContent,
     PopoverHeader,
     PopoverTrigger,
-    VStack,
     useColorMode,
 } from "@chakra-ui/react";
 import "./App.css";
@@ -24,13 +23,13 @@ function App(): JSX.Element {
 
     return (
         <>
-            <VStack spacing={"2rem"}>
-                <header>
-                    <Button onClick={toggleColorMode}>
-                        Toggle {colorMode === "light" ? "Dark" : "Light"}
-                    </Button>
-                </header>
-            </VStack>
+            <Button
+                marginTop="0.5rem"
+                marginLeft={"0.5rem"}
+                onClick={toggleColorMode}
+            >
+                Toggle {colorMode === "light" ? "Dark" : "Light"}
+            </Button>
 
             <Flex justifyContent={"flex-end"}>
                 <Popover>
