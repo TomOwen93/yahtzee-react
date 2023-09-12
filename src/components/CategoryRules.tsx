@@ -35,9 +35,13 @@ export const CategoryRules = () => (
                     </ListItem>
                 </UnorderedList>
             </ListItem>
-            <ListItem>Chance: Sum of all dice.</ListItem>
             <ListItem>
-                Bonus: Awarded for a total of 63+ points in Ones through Sixes.
+                {" "}
+                <Text as="b">Chance:</Text> <br /> Sum of all dice.
+            </ListItem>
+            <ListItem>
+                <Text as="b"> Bonus: </Text> <br /> Awarded for a total of 63+
+                points in Ones through Sixes.
             </ListItem>
         </UnorderedList>
     </>
