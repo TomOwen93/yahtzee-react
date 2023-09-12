@@ -142,15 +142,18 @@ export default function GameSection(): JSX.Element {
                         {gameState.rollsLeft < 3 &&
                             gameState.rolledDice.map((d) => (
                                 <Button
+                                    w={"4rem"}
+                                    h={"4rem"}
                                     onClick={() =>
                                         dispatch({
                                             type: "keep-dice",
                                             payload: d,
                                         })
                                     }
-                                    textAlign={"center"}
+                                    justifyContent="center"
+                                    alignItems={"center"}
                                     key={d.id}
-                                    fontSize={"xx-large"}
+                                    fontSize={"xxx-large"}
                                 >
                                     {" "}
                                     {d.roll !== null && diceEmojis[d.roll]}
@@ -167,9 +170,13 @@ export default function GameSection(): JSX.Element {
                                         payload: d,
                                     })
                                 }
+                                w={"4rem"}
+                                h={"4rem"}
+                                justifyContent="center"
+                                alignItems={"center"}
                                 textAlign={"center"}
                                 key={d.id}
-                                fontSize={"xx-large"}
+                                fontSize={"xxx-large"}
                             >
                                 {" "}
                                 {d.roll !== null && diceEmojis[d.roll]}
