@@ -21,6 +21,18 @@ export interface NextTurnAction {
     type: "next-turn";
 }
 
+export interface EndGameTurn {
+    type: "end-game";
+}
+
+export type Action =
+    | RollDiceAction
+    | KeepDiceAction
+    | ReturnDiceAction
+    | LockInScoreAction
+    | NextTurnAction
+    | EndGameTurn;
+
 export type Dice = {
     id: number;
     roll: null | DiceRoll;
@@ -29,9 +41,18 @@ export type Dice = {
 export type DiceRoll = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface Player {
-    score: number;
     previousYahtzee: boolean;
     scoringChecks: PotentialFullScoring;
+    gameScores: gameRounds;
+}
+
+export interface gameRounds {
+    1: PotentialFullScoring | null;
+    2: PotentialFullScoring | null;
+    3: PotentialFullScoring | null;
+    4: PotentialFullScoring | null;
+    5: PotentialFullScoring | null;
+    6: PotentialFullScoring | null;
 }
 
 export interface PotentialFullScoring {
@@ -84,5 +105,5 @@ export interface GameState {
     rolledDice: Dice[];
     Player1: Player;
     keptDice: Dice[];
-    gameRound: number;
+    gameRound: 1 | 2 | 3 | 4 | 5 | 6;
 }
