@@ -59,6 +59,15 @@ export interface DiceCounts {
     sixes: { value: number; count: number };
 }
 
+export interface PotentialSectionOneScoring {
+    ones: number | null;
+    twos: number | null;
+    threes: number | null;
+    fours: number | null;
+    fives: number | null;
+    sixes: number | null;
+}
+
 export interface PotentialSectionTwoScoring {
     threeOfAKind: number | null;
     fourOfAKind: number | null;
