@@ -18,6 +18,7 @@ export interface TableSectionProps {
     dispatch: React.Dispatch<Action>;
     potentialScores: PotentialFullScoring;
     gameState: GameState;
+    totalScore: number;
     handleToast: (
         title: string,
         description: string,
@@ -40,6 +41,7 @@ export default function TableSection({
     potentialScores,
     gameState,
     handleToast,
+    totalScore,
 }: TableSectionProps): JSX.Element {
     return (
         <>
@@ -114,6 +116,9 @@ export default function TableSection({
 
                         <Tr>
                             <Td fontWeight="bold">Total Points:</Td>
+                            <Td color={"green"} fontWeight={"bold"}>
+                                {totalScore}
+                            </Td>
                         </Tr>
                         <Tr>
                             <Td fontWeight="bold">Bonus Points:</Td>

@@ -1,13 +1,21 @@
 import { useToast } from "@chakra-ui/react";
-import { GameState, PotentialFullScoring } from "../types";
+import {
+    GameState,
+    PotentialFullScoring,
+    PotentialSectionOneScoring,
+    PotentialSectionTwoScoring,
+} from "../types";
 import { Action } from "./GameSection";
 
 import TableSection from "./TableSection";
+import { calculateTotals } from "../utils/calculateTotals";
 
 interface ScoreTableProps {
     gameState: GameState;
     dispatch: React.Dispatch<Action>;
     potentialScores: PotentialFullScoring;
+    sectionOneScores: PotentialSectionOneScoring;
+    sectionTwoScores: PotentialSectionTwoScoring;
 }
 
 const sectionOneLookUps = {
@@ -62,6 +70,11 @@ export default function ScoreTable({
             isClosable: true,
         });
 
+    const currentTotalSection1 = calculateTotals(1, playersScores);
+    const currentTotalSection2 = calculateTotals(2, playersScores);
+
+    console.log(currentTotalSection1, currentTotalSection2);
+
     return (
         <>
             <TableSection
@@ -72,6 +85,7 @@ export default function ScoreTable({
                 gameState={gameState}
                 potentialScores={potentialScores}
                 handleToast={handleToast}
+                totalScore={currentTotalSection1}
             />
             <TableSection
                 section={2}
@@ -81,6 +95,7 @@ export default function ScoreTable({
                 gameState={gameState}
                 potentialScores={potentialScores}
                 handleToast={handleToast}
+                totalScore={currentTotalSection2}
             />
         </>
     );

@@ -1,4 +1,9 @@
-import { Dice } from "../types";
+import {
+    Dice,
+    PotentialFullScoring,
+    PotentialSectionOneScoring,
+    PotentialSectionTwoScoring,
+} from "../types";
 import { countOnesToSixes } from "./countOnestoSixes";
 import { scoreSectionOne } from "./scoreSectionOne";
 import { scoreSectionTwo } from "./scoreSectionTwo";
@@ -6,7 +11,11 @@ import { scoreSectionTwo } from "./scoreSectionTwo";
 export const calculatePotentialScores = (
     diceToScore: Dice[],
     previousYahtzee: boolean
-) => {
+): [
+    PotentialFullScoring,
+    PotentialSectionOneScoring,
+    PotentialSectionTwoScoring
+] => {
     const currentDiceCounts = countOnesToSixes(diceToScore);
     const sectionOneScores = scoreSectionOne(diceToScore);
     const sectionTwoScores = scoreSectionTwo(
@@ -14,7 +23,6 @@ export const calculatePotentialScores = (
         previousYahtzee
     );
 
-    const fullPotentialScore = { ...sectionOneScores, ...sectionTwoScores };
-    console.log(fullPotentialScore);
-    return fullPotentialScore;
+    const potentialScores = { ...sectionOneScores, ...sectionTwoScores };
+    return [potentialScores, sectionOneScores, sectionTwoScores];
 };

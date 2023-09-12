@@ -100,10 +100,12 @@ export default function GameSection(): JSX.Element {
     const [gameState, dispatch] = useImmerReducer(reducer, initialState);
 
     const combinedDice = gameState.rolledDice.concat(gameState.keptDice);
-    const potentialScores = calculatePotentialScores(
-        combinedDice,
-        gameState.Player1.previousYahtzee
-    );
+
+    const [potentialScores, sectionOneScores, sectionTwoScores] =
+        calculatePotentialScores(
+            combinedDice,
+            gameState.Player1.previousYahtzee
+        );
 
     const diceEmojis = {
         1: "⚀",
@@ -160,6 +162,8 @@ export default function GameSection(): JSX.Element {
                     gameState={gameState}
                     dispatch={dispatch}
                     potentialScores={potentialScores}
+                    sectionOneScores={sectionOneScores}
+                    sectionTwoScores={sectionTwoScores}
                 />
             </VStack>
         </>
