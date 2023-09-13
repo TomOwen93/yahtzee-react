@@ -1,4 +1,18 @@
-import { useToast } from "@chakra-ui/react";
+import {
+    Center,
+    Divider,
+    Flex,
+    Table,
+    TableContainer,
+    Tag,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
+    VStack,
+    useToast,
+} from "@chakra-ui/react";
 import {
     Action,
     GameState,
@@ -7,8 +21,8 @@ import {
     PotentialSectionTwoScoring,
 } from "../types";
 
-import TableSection from "./TableSection";
 import { calculateTotals } from "../utils/calculateTotals";
+import TableSection from "./TableSection";
 
 interface ScoreTableProps {
     gameState: GameState;
@@ -73,28 +87,65 @@ export default function ScoreTable({
     const currentTotalSection1 = calculateTotals(1, playersScores);
     const currentTotalSection2 = calculateTotals(2, playersScores);
 
+    if (currentTotalSection1 >= 63) {
+        dispatch({ type: "bonus-points" });
+    }
+
     return (
         <>
-            <TableSection
-                section={1}
-                playersScores={playersScores}
-                sectionLookUp={sectionOneLookUps}
-                dispatch={dispatch}
-                gameState={gameState}
-                potentialScores={potentialScores}
-                handleToast={handleToast}
-                totalScore={currentTotalSection1}
-            />
-            <TableSection
-                section={2}
-                playersScores={playersScores}
-                sectionLookUp={sectionTwoLookUps}
-                dispatch={dispatch}
-                gameState={gameState}
-                potentialScores={potentialScores}
-                handleToast={handleToast}
-                totalScore={currentTotalSection2}
-            />
+            <VStack>
+                <Flex>
+                    <TableSection
+                        section={1}
+                        currentRoundScores={playersScores}
+                        sectionLookUp={sectionOneLookUps}
+                        dispatch={dispatch}
+                        gameState={gameState}
+                        potentialScores={potentialScores}
+                        handleToast={handleToast}
+                        totalScore={currentTotalSection1}
+                    />
+                    <Center height="33rem">
+                        <Divider orientation="vertical" />
+                    </Center>
+                    <TableSection
+                        section={2}
+                        currentRoundScores={playersScores}
+                        sectionLookUp={sectionTwoLookUps}
+                        dispatch={dispatch}
+                        gameState={gameState}
+                        potentialScores={potentialScores}
+                        handleToast={handleToast}
+                        totalScore={currentTotalSection2}
+                    />
+                </Flex>
+
+                <TableContainer>
+                    <Table size="md">
+                        <Thead>
+                            <Tr>
+                                <Th textAlign={"center"}>Combined Score</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            <Tr>
+                                <Td textAlign={"center"}>
+                                    <Tag
+                                        fontSize={"1rem"}
+                                        size={"md"}
+                                        colorScheme="green"
+                                        textAlign={"center"}
+                                    >
+                                        {currentTotalSection1 +
+                                            currentTotalSection2 +
+                                            gameState.Player1.bonusPoints}
+                                    </Tag>
+                                </Td>
+                            </Tr>
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </VStack>
         </>
     );
 }
