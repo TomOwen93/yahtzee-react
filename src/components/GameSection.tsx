@@ -148,7 +148,7 @@ export default function GameSection(): JSX.Element {
         ) {
             onOpen();
         }
-    }, [gameState.Player1.scoringChecks]);
+    }, [onOpen, playersCurrentScore]);
 
     const handleCloseMenu = () => {
         onClose();
