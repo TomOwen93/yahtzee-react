@@ -49,7 +49,7 @@ export default function TableSection({
     return (
         <>
             <TableContainer>
-                <Table size="md">
+                <Table size={"sm"}>
                     <Thead>
                         <Tr>
                             <Th textAlign={"center"}>{`Section ${section}`}</Th>
@@ -128,7 +128,7 @@ export default function TableSection({
                                     </Td>
                                     <Td textAlign={"center"}>
                                         <Tag
-                                            fontSize={"1rem"}
+                                            fontSize={"0.75rem"}
                                             size={"md"}
                                             colorScheme="yellow"
                                         >
@@ -144,7 +144,7 @@ export default function TableSection({
 
                                     <Td textAlign={"center"}>
                                         <Tag
-                                            fontSize={"1rem"}
+                                            fontSize={"0.75rem"}
                                             size={"md"}
                                             colorScheme="green"
                                         >
@@ -161,7 +161,7 @@ export default function TableSection({
                                 </Td>
                                 <Td fontWeight="bold" textAlign={"center"}>
                                     <Tag
-                                        fontSize={"1rem"}
+                                        fontSize={"0.75rem"}
                                         size={"md"}
                                         colorScheme="yellow"
                                     >
@@ -179,7 +179,7 @@ export default function TableSection({
 
                                 <Td fontWeight="bold" textAlign={"center"}>
                                     <Tag
-                                        fontSize={"1rem"}
+                                        fontSize={"0.75rem"}
                                         size={"md"}
                                         colorScheme="green"
                                     >
