@@ -14,7 +14,7 @@ import { CombinedSectionLookup } from "./ScoreTable";
 
 export interface TableSectionProps {
     section: number;
-    playersScores: PotentialFullScoring;
+    currentRoundScores: PotentialFullScoring;
     sectionLookUp: CombinedSectionLookup;
     dispatch: React.Dispatch<Action>;
     potentialScores: PotentialFullScoring;
@@ -36,7 +36,7 @@ export interface TableSectionProps {
 
 export default function TableSection({
     section,
-    playersScores,
+    currentRoundScores,
     sectionLookUp,
     dispatch,
     potentialScores,
@@ -44,97 +44,150 @@ export default function TableSection({
     handleToast,
     totalScore,
 }: TableSectionProps): JSX.Element {
+    const bonusPoints = gameState.Player1.bonusPoints;
+
     return (
         <>
             <TableContainer>
                 <Table size="md">
                     <Thead>
                         <Tr>
-                            <Th>{`Section ${section}`}</Th>
-                            <Th>Game 1</Th>
+                            <Th textAlign={"center"}>{`Section ${section}`}</Th>
+                            <Th textAlign={"center"}>{`Score`}</Th>
                         </Tr>
                     </Thead>
 
-                    <Tbody>
+                    <Tbody textAlign={"center"}>
                         {Object.keys(sectionLookUp).map((row, index) => (
                             <Tr key={index}>
-                                <Td>
+                                <Td textAlign={"center"}>
                                     {
                                         sectionLookUp[
                                             row as keyof CombinedSectionLookup
                                         ]
                                     }
                                 </Td>
-                                {playersScores[
+
+                                {currentRoundScores[
                                     row as keyof PotentialFullScoring
                                 ] !== null ? (
-                                    <Td>
+                                    <Td textAlign={"center"}>
                                         {
-                                            playersScores[
+                                            currentRoundScores[
                                                 row as keyof PotentialFullScoring
                                             ]
                                         }
                                     </Td>
+                                ) : gameState.rollsLeft === 3 ? (
+                                    <Td textAlign={"center"}></Td>
                                 ) : (
-                                    potentialScores &&
-                                    gameState.rollsLeft < 3 && (
-                                        <Td
-                                            color="orange"
-                                            cursor={"progress"}
-                                            onClick={() => {
-                                                dispatch({
-                                                    type: "next-turn",
-                                                });
-                                                dispatch({
-                                                    type: "lock-in-score",
-                                                    payload: {
-                                                        key: row,
-                                                        value: potentialScores[
-                                                            row as keyof PotentialFullScoring
-                                                        ],
-                                                    },
-                                                });
-                                                handleToast(
-                                                    `Score chosen:`,
-                                                    `Score category ${row} was locked in`,
-                                                    `success`,
-                                                    5000
-                                                );
-                                            }}
-                                        >
-                                            {
-                                                <Text as={"u"}>
-                                                    {
-                                                        potentialScores[
-                                                            row as keyof PotentialFullScoring
-                                                        ]
-                                                    }
-                                                </Text>
-                                            }
-                                        </Td>
-                                    )
+                                    <Td
+                                        textAlign={"center"}
+                                        color="orange"
+                                        cursor={"pointer"}
+                                        onClick={() => {
+                                            dispatch({
+                                                type: "next-turn",
+                                            });
+                                            dispatch({
+                                                type: "lock-in-score",
+                                                payload: {
+                                                    key: row,
+                                                    value: potentialScores[
+                                                        row as keyof PotentialFullScoring
+                                                    ],
+                                                },
+                                            });
+                                            handleToast(
+                                                `Score chosen:`,
+                                                `Score category ${row} was locked in`,
+                                                `success`,
+                                                2000
+                                            );
+                                        }}
+                                    >
+                                        {
+                                            <Text>
+                                                {
+                                                    potentialScores[
+                                                        row as keyof PotentialFullScoring
+                                                    ]
+                                                }
+                                            </Text>
+                                        }
+                                    </Td>
                                 )}
                             </Tr>
                         ))}
 
                         <Tr>
-                            <Td fontWeight="bold">Total Points:</Td>
-                            <Td>
-                                <Tag
-                                    fontSize={"1rem"}
-                                    size={"md"}
-                                    colorScheme="yellow"
-                                >
-                                    {totalScore}
-                                </Tag>
-                            </Td>
+                            {section === 1 ? (
+                                <>
+                                    <Td textAlign={"center"} fontWeight="bold">
+                                        Total Points:
+                                    </Td>
+                                    <Td textAlign={"center"}>
+                                        <Tag
+                                            fontSize={"1rem"}
+                                            size={"md"}
+                                            colorScheme="yellow"
+                                        >
+                                            {totalScore}
+                                        </Tag>
+                                    </Td>
+                                </>
+                            ) : (
+                                <>
+                                    <Td fontWeight="bold" textAlign={"center"}>
+                                        Total Points Section 2:
+                                    </Td>
+
+                                    <Td textAlign={"center"}>
+                                        <Tag
+                                            fontSize={"1rem"}
+                                            size={"md"}
+                                            colorScheme="green"
+                                        >
+                                            {totalScore}
+                                        </Tag>
+                                    </Td>
+                                </>
+                            )}
                         </Tr>
-                        <Tr>
-                            <Td fontWeight="bold">Bonus Points:</Td>
-                        </Tr>
-                        <Tr>
-                            <Td fontWeight="bold">Total Section {section}:</Td>
-                        </Tr>
+                        {section === 1 && (
+                            <Tr>
+                                <Td fontWeight="bold" textAlign={"center"}>
+                                    Bonus Points:{" "}
+                                </Td>
+                                <Td fontWeight="bold" textAlign={"center"}>
+                                    <Tag
+                                        fontSize={"1rem"}
+                                        size={"md"}
+                                        colorScheme="yellow"
+                                    >
+                                        {" "}
+                                        {bonusPoints}
+                                    </Tag>
+                                </Td>
+                            </Tr>
+                        )}
+                        {section === 1 && (
+                            <Tr>
+                                <Td fontWeight="bold" textAlign={"center"}>
+                                    Total Section {section}:
+                                </Td>
+
+                                <Td fontWeight="bold" textAlign={"center"}>
+                                    <Tag
+                                        fontSize={"1rem"}
+                                        size={"md"}
+                                        colorScheme="green"
+                                    >
+                                        {totalScore + bonusPoints}
+                                    </Tag>
+                                </Td>
+                            </Tr>
+                        )}
                     </Tbody>
                 </Table>
             </TableContainer>
