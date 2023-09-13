@@ -20,6 +20,7 @@ import { Action, DiceRoll, GameState, PotentialFullScoring } from "../types";
 import { calculatePotentialScores } from "../utils/calculatePotentialScores";
 import { calculateTotals } from "../utils/calculateTotals";
 import ScoreTable from "./ScoreTable";
+import { useEffect } from "react";
 
 export default function GameSection(): JSX.Element {
     const initialState: GameState = {
@@ -141,13 +142,17 @@ export default function GameSection(): JSX.Element {
 
     const playersCurrentScore = gameState.Player1.scoringChecks;
 
-    if (Object.values(playersCurrentScore).every((score) => score !== null)) {
-        dispatch({ type: "end-game" });
-        onOpen();
-    }
+    useEffect(() => {
+        if (
+            Object.values(playersCurrentScore).every((score) => score !== null)
+        ) {
+            onOpen();
+        }
+    }, [onOpen, playersCurrentScore]);
 
     const handleCloseMenu = () => {
         onClose();
+        dispatch({ type: "end-game" });
         dispatch({ type: "next-turn" });
     };
 
