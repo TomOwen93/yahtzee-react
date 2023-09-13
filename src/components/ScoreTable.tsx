@@ -82,7 +82,7 @@ export default function ScoreTable({
             status,
             duration,
             isClosable: true,
-            position: "top",
+            position: "bottom-right",
         });
 
     const currentTotalSection1 = calculateTotals(1, playersScores);
