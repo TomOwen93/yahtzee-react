@@ -82,6 +82,7 @@ export default function ScoreTable({
             status,
             duration,
             isClosable: true,
+            position: "top",
         });
 
     const currentTotalSection1 = calculateTotals(1, playersScores);
@@ -105,7 +106,7 @@ export default function ScoreTable({
                         handleToast={handleToast}
                         totalScore={currentTotalSection1}
                     />
-                    <Center height="33rem">
+                    <Center height="21.5rem">
                         <Divider orientation="vertical" />
                     </Center>
                     <TableSection
@@ -121,7 +122,7 @@ export default function ScoreTable({
                 </Flex>
 
                 <TableContainer>
-                    <Table size="md">
+                    <Table size="sm">
                         <Thead>
                             <Tr>
                                 <Th textAlign={"center"}>Combined Score</Th>
