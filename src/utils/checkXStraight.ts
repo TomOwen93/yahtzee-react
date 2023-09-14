@@ -6,37 +6,33 @@ export const checkXStraight = (
 ) => {
     let xStraightScore = 0;
 
-    const diceValues = Object.values(diceCount);
-    const straightArray: DiceCounts[] = [];
+    const diceFiltered = Object.values(diceCount).filter(
+        (dice) => dice.count > 0
+    );
+    const diceValues = diceFiltered.map((dice) => dice.value);
+    diceValues.sort((a, b) => a - b);
+
+    let consecutiveCount = 1;
 
     for (let i = 0; i < diceValues.length - 1; i++) {
-        if (straightArray.length === straightLength - 1) {
-            break;
+        if (diceValues[i + 1] === diceValues[i] + 1) {
+            consecutiveCount++;
+        } else if (diceValues[i + 1] !== diceValues[i]) {
+            consecutiveCount = 1;
         }
 
-        for (let j = i; j < diceValues.length - 1; j++) {
-            const currentNumber = diceValues[j];
-            const nextNumber = diceValues[j + 1];
-
-            if (
-                nextNumber.value === currentNumber.value + 1 &&
-                nextNumber.count > 0 &&
-                currentNumber.count > 0 &&
-                !straightArray.includes(currentNumber)
-            ) {
-                straightArray.push(currentNumber);
-            } else {
-                break;
+        if (consecutiveCount === straightLength) {
+            if (straightLength === 4) {
+                xStraightScore = 30;
+            } else if (straightLength === 5) {
+                xStraightScore = 40;
             }
+            break;
         }
     }
 
-    if (straightArray.length === straightLength - 1) {
-        if (straightLength === 4) {
-            xStraightScore = 30;
-        } else {
-            xStraightScore = 40;
-        }
+    if (consecutiveCount < straightLength) {
+        xStraightScore = 0;
     }
 
     return xStraightScore;

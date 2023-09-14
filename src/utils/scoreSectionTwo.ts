@@ -28,7 +28,5 @@ export const scoreSectionTwo = (
     sectionTwoScoring.largeStraight = checkXStraight(diceCounts, 5);
     sectionTwoScoring.chance = addAdditionalScores(diceCounts);
 
-    console.log(sectionTwoScoring);
-
     return sectionTwoScoring;
 };
