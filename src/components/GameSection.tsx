@@ -243,7 +243,12 @@ export default function GameSection(): JSX.Element {
                 />
             </VStack>
 
-            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                isCentered
+                closeOnOverlayClick={false}
+            >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader textAlign={"center"}>Game Over!</ModalHeader>
