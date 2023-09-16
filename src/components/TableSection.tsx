@@ -53,12 +53,14 @@ export default function TableSection({
                     <Thead>
                         <Tr>
                             <Th
-                                fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                fontSize={{ base: "0.8rem", lg: "1rem" }}
                                 textAlign={"center"}
+                                paddingInlineStart={"0"}
                             >{`Section ${section}`}</Th>
                             <Th
-                                fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                fontSize={{ base: "0.8rem", lg: "1rem" }}
                                 textAlign={"center"}
+                                paddingInlineStart={"0"}
                             >{`Score`}</Th>
                         </Tr>
                     </Thead>
@@ -67,7 +69,7 @@ export default function TableSection({
                         {Object.keys(sectionLookUp).map((row, index) => (
                             <Tr key={index}>
                                 <Td
-                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
                                     textAlign={"center"}
                                 >
                                     {
@@ -82,7 +84,7 @@ export default function TableSection({
                                 ] !== null ? (
                                     <Td
                                         fontSize={{
-                                            base: "0.7rem",
+                                            base: "0.8rem",
                                             lg: "1rem",
                                         }}
                                         textAlign={"center"}
@@ -96,7 +98,7 @@ export default function TableSection({
                                 ) : gameState.rollsLeft === 3 ? (
                                     <Td
                                         fontSize={{
-                                            base: "0.7rem",
+                                            base: "0.8rem",
                                             lg: "1rem",
                                         }}
                                         textAlign={"center"}
@@ -104,7 +106,7 @@ export default function TableSection({
                                 ) : (
                                     <Td
                                         fontSize={{
-                                            base: "0.7rem",
+                                            base: "0.8rem",
                                             lg: "1rem",
                                         }}
                                         textAlign={"center"}
@@ -150,7 +152,7 @@ export default function TableSection({
                                 <>
                                     <Td
                                         fontSize={{
-                                            base: "0.7rem",
+                                            base: "0.8rem",
                                             lg: "1rem",
                                         }}
                                         textAlign={"center"}
@@ -172,7 +174,7 @@ export default function TableSection({
                                 <>
                                     <Td
                                         fontSize={{
-                                            base: "0.7rem",
+                                            base: "0.8rem",
                                             lg: "1rem",
                                         }}
                                         fontWeight="bold"
@@ -183,7 +185,7 @@ export default function TableSection({
 
                                     <Td
                                         fontSize={{
-                                            base: "0.7rem",
+                                            base: "0.8rem",
                                             lg: "1rem",
                                         }}
                                         textAlign={"center"}
@@ -202,14 +204,14 @@ export default function TableSection({
                         {section === 1 && (
                             <Tr>
                                 <Td
-                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
                                     fontWeight="bold"
                                     textAlign={"center"}
                                 >
                                     Bonus Points:{" "}
                                 </Td>
                                 <Td
-                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
                                     fontWeight="bold"
                                     textAlign={"center"}
                                 >
@@ -227,7 +229,7 @@ export default function TableSection({
                         {section === 1 && (
                             <Tr>
                                 <Td
-                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
                                     fontWeight="bold"
                                     textAlign={"center"}
                                 >
@@ -235,7 +237,7 @@ export default function TableSection({
                                 </Td>
 
                                 <Td
-                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
                                     fontWeight="bold"
                                     textAlign={"center"}
                                 >

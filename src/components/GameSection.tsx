@@ -173,10 +173,17 @@ export default function GameSection(): JSX.Element {
     return (
         <>
             <VStack>
-                <Heading as="h3" size={{ base: "sm", lg: "md" }}>
+                <Heading
+                    as="h3"
+                    size={{ base: "sm", lg: "md" }}
+                    color={gameState.rollsLeft <= 1 ? "red" : "white"}
+                >
                     Rolls Left: {gameState.rollsLeft}
                 </Heading>
-                <Button onClick={() => dispatch({ type: "roll-dice" })}>
+                <Button
+                    size={{ base: "sm", lg: "md" }}
+                    onClick={() => dispatch({ type: "roll-dice" })}
+                >
                     Roll Dice
                 </Button>
 
@@ -223,6 +230,7 @@ export default function GameSection(): JSX.Element {
                                 textAlign={"center"}
                                 key={d.id}
                                 fontSize={"xxx-large"}
+                                mb={{ base: 1, lg: 2 }}
                             >
                                 {d.roll !== null
                                     ? diceEmojis[d.roll]
