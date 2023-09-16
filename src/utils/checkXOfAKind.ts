@@ -11,11 +11,18 @@ export const checkXOfAKind = (diceCount: DiceCounts, countToCheck: number) => {
     for (const [key, objValue] of Object.entries(diceCount)) {
         const { value, count } = objValue;
 
-        if (count === countToCheck && value > highestXOfAKind.value) {
-            XOfAKindScore = Number(value) * 3;
-            highestXOfAKind = { key: key, value: objValue };
+        if (count >= countToCheck && value > highestXOfAKind.value) {
+            if (count === 4) {
+                XOfAKindScore = Number(value) * 4;
+                highestXOfAKind = { key: key, value: objValue };
 
-            xOfAKind = true;
+                xOfAKind = true;
+            } else {
+                XOfAKindScore = Number(value) * 3;
+                highestXOfAKind = { key: key, value: objValue };
+
+                xOfAKind = true;
+            }
         }
     }
 

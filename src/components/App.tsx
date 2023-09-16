@@ -21,23 +21,35 @@ function App(): JSX.Element {
 
     return (
         <>
-            <Flex justifyContent="space-between" w={"100vw"}>
+            <Flex
+                justifyContent={{ base: "center", lg: "space-between" }}
+                w={"100vw"}
+                flexDirection={{ base: "column", lg: "row" }}
+            >
                 <Button
                     marginTop="0.5rem"
-                    marginLeft={"0.5rem"}
+                    marginLeft={{ base: "auto", lg: "0.5rem" }}
+                    marginRight={{ base: "auto", lg: "" }}
                     onClick={toggleColorMode}
+                    mb={{ base: 1, lg: 2 }}
+                    width={{ base: "20rem", lg: "auto" }}
                 >
                     Toggle {colorMode === "light" ? "Dark" : "Light"}
                 </Button>
 
-                <Heading marginLeft={"15rem"} fontSize={"2.5rem"}>
-                    Lets Play Yahtzee!
+                <Heading
+                    mb={{ base: 1, lg: 2 }}
+                    marginLeft={{ base: "auto", lg: "15rem" }}
+                    marginRight={{ base: "auto", lg: "" }}
+                    fontSize={{ base: "2rem", lg: "2.5rem" }}
+                >
+                    Let's Play Yahtzee!
                 </Heading>
 
-                <Flex>
+                <Flex align={{ base: "center" }} margin={"auto"}>
                     <Popover>
                         <PopoverTrigger>
-                            <Button marginRight="0.5rem">Rules</Button>
+                            <Button mb={{ base: 1, lg: 2 }}>Rules</Button>
                         </PopoverTrigger>
                         <PopoverContent>
                             <PopoverArrow />
@@ -53,7 +65,10 @@ function App(): JSX.Element {
 
                     <Popover>
                         <PopoverTrigger>
-                            <Button marginRight="10rem">
+                            <Button
+                                mb={{ base: 1, lg: 2 }}
+                                marginLeft={{ base: "auto", lg: "0.5rem" }}
+                            >
                                 Scoring Categories
                             </Button>
                         </PopoverTrigger>
