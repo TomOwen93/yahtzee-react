@@ -46,10 +46,19 @@ function App(): JSX.Element {
                     Let's Play Yahtzee!
                 </Heading>
 
-                <Flex align={{ base: "center" }} margin={"auto"}>
+                <Flex
+                    align={{ base: "center" }}
+                    margin={"auto"}
+                    gap={{ base: "0.5rem" }}
+                >
                     <Popover>
                         <PopoverTrigger>
-                            <Button mb={{ base: 1, lg: 2 }}>Rules</Button>
+                            <Button
+                                size={{ base: "sm", lg: "md" }}
+                                mb={{ base: 1, lg: 2 }}
+                            >
+                                Rules
+                            </Button>
                         </PopoverTrigger>
                         <PopoverContent>
                             <PopoverArrow />
@@ -66,6 +75,7 @@ function App(): JSX.Element {
                     <Popover>
                         <PopoverTrigger>
                             <Button
+                                size={{ base: "sm", lg: "md" }}
                                 mb={{ base: 1, lg: 2 }}
                                 marginLeft={{ base: "auto", lg: "0.5rem" }}
                             >
