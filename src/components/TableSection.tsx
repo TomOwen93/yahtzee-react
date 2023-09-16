@@ -48,19 +48,28 @@ export default function TableSection({
 
     return (
         <>
-            <TableContainer>
+            <TableContainer whiteSpace={"normal"}>
                 <Table size={"sm"}>
                     <Thead>
                         <Tr>
-                            <Th textAlign={"center"}>{`Section ${section}`}</Th>
-                            <Th textAlign={"center"}>{`Score`}</Th>
+                            <Th
+                                fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                textAlign={"center"}
+                            >{`Section ${section}`}</Th>
+                            <Th
+                                fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                textAlign={"center"}
+                            >{`Score`}</Th>
                         </Tr>
                     </Thead>
 
                     <Tbody textAlign={"center"}>
                         {Object.keys(sectionLookUp).map((row, index) => (
                             <Tr key={index}>
-                                <Td textAlign={"center"}>
+                                <Td
+                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    textAlign={"center"}
+                                >
                                     {
                                         sectionLookUp[
                                             row as keyof CombinedSectionLookup
@@ -71,7 +80,13 @@ export default function TableSection({
                                 {currentRoundScores[
                                     row as keyof PotentialFullScoring
                                 ] !== null ? (
-                                    <Td textAlign={"center"}>
+                                    <Td
+                                        fontSize={{
+                                            base: "0.7rem",
+                                            lg: "1rem",
+                                        }}
+                                        textAlign={"center"}
+                                    >
                                         {
                                             currentRoundScores[
                                                 row as keyof PotentialFullScoring
@@ -79,9 +94,19 @@ export default function TableSection({
                                         }
                                     </Td>
                                 ) : gameState.rollsLeft === 3 ? (
-                                    <Td textAlign={"center"}></Td>
+                                    <Td
+                                        fontSize={{
+                                            base: "0.7rem",
+                                            lg: "1rem",
+                                        }}
+                                        textAlign={"center"}
+                                    ></Td>
                                 ) : (
                                     <Td
+                                        fontSize={{
+                                            base: "0.7rem",
+                                            lg: "1rem",
+                                        }}
                                         textAlign={"center"}
                                         color="orange"
                                         cursor={"pointer"}
@@ -123,7 +148,14 @@ export default function TableSection({
                         <Tr>
                             {section === 1 ? (
                                 <>
-                                    <Td textAlign={"center"} fontWeight="bold">
+                                    <Td
+                                        fontSize={{
+                                            base: "0.7rem",
+                                            lg: "1rem",
+                                        }}
+                                        textAlign={"center"}
+                                        fontWeight="bold"
+                                    >
                                         Total Points:
                                     </Td>
                                     <Td textAlign={"center"}>
@@ -138,11 +170,24 @@ export default function TableSection({
                                 </>
                             ) : (
                                 <>
-                                    <Td fontWeight="bold" textAlign={"center"}>
+                                    <Td
+                                        fontSize={{
+                                            base: "0.7rem",
+                                            lg: "1rem",
+                                        }}
+                                        fontWeight="bold"
+                                        textAlign={"center"}
+                                    >
                                         Total Points Section 2:
                                     </Td>
 
-                                    <Td textAlign={"center"}>
+                                    <Td
+                                        fontSize={{
+                                            base: "0.7rem",
+                                            lg: "1rem",
+                                        }}
+                                        textAlign={"center"}
+                                    >
                                         <Tag
                                             fontSize={"0.75rem"}
                                             size={"md"}
@@ -156,10 +201,18 @@ export default function TableSection({
                         </Tr>
                         {section === 1 && (
                             <Tr>
-                                <Td fontWeight="bold" textAlign={"center"}>
+                                <Td
+                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontWeight="bold"
+                                    textAlign={"center"}
+                                >
                                     Bonus Points:{" "}
                                 </Td>
-                                <Td fontWeight="bold" textAlign={"center"}>
+                                <Td
+                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontWeight="bold"
+                                    textAlign={"center"}
+                                >
                                     <Tag
                                         fontSize={"0.75rem"}
                                         size={"md"}
@@ -173,11 +226,19 @@ export default function TableSection({
                         )}
                         {section === 1 && (
                             <Tr>
-                                <Td fontWeight="bold" textAlign={"center"}>
+                                <Td
+                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontWeight="bold"
+                                    textAlign={"center"}
+                                >
                                     Total Section {section}:
                                 </Td>
 
-                                <Td fontWeight="bold" textAlign={"center"}>
+                                <Td
+                                    fontSize={{ base: "0.7rem", lg: "1rem" }}
+                                    fontWeight="bold"
+                                    textAlign={"center"}
+                                >
                                     <Tag
                                         fontSize={"0.75rem"}
                                         size={"md"}

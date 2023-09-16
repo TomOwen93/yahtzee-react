@@ -132,6 +132,7 @@ export default function GameSection(): JSX.Element {
         );
 
     const diceEmojis = {
+        null: "",
         1: "⚀",
         2: "⚁",
         3: "⚂",
@@ -172,22 +173,16 @@ export default function GameSection(): JSX.Element {
     return (
         <>
             <VStack>
-                <Heading as="h3" size="md">
+                <Heading as="h3" size={{ base: "sm", lg: "md" }}>
                     Rolls Left: {gameState.rollsLeft}
                 </Heading>
                 <Button onClick={() => dispatch({ type: "roll-dice" })}>
                     Roll Dice
                 </Button>
 
-                <Card
-                    justify={"center"}
-                    align={"center"}
-                    w="30rem"
-                    h="15rem"
-                    gap={"1rem"}
-                >
-                    <Text as="u">You rolled:</Text>
-                    <Flex gap={"0.75rem"}>
+                <Card justify={"center"} align={"center"} w="100vw">
+                    <Text>You rolled:</Text>
+                    <Flex gap={"0.75rem"} minH={"4rem"}>
                         {gameState.rollsLeft < 3 &&
                             gameState.rolledDice.map((d) => (
                                 <Button
@@ -205,12 +200,14 @@ export default function GameSection(): JSX.Element {
                                     fontSize={"xxx-large"}
                                 >
                                     {" "}
-                                    {d.roll !== null && diceEmojis[d.roll]}
+                                    {d.roll !== null
+                                        ? diceEmojis[d.roll]
+                                        : diceEmojis.null}
                                 </Button>
                             ))}
                     </Flex>
-                    <Text as="u">Dice Kept:</Text>
-                    <Flex gap={"0.75rem"}>
+                    <Text>Dice Kept:</Text>
+                    <Flex gap={"0.75rem"} minH={"4rem"}>
                         {sortedKeptDice.map((d) => (
                             <Button
                                 onClick={() =>
@@ -227,8 +224,9 @@ export default function GameSection(): JSX.Element {
                                 key={d.id}
                                 fontSize={"xxx-large"}
                             >
-                                {" "}
-                                {d.roll !== null && diceEmojis[d.roll]}
+                                {d.roll !== null
+                                    ? diceEmojis[d.roll]
+                                    : diceEmojis.null}
                             </Button>
                         ))}
                     </Flex>
