@@ -22,6 +22,16 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
         3: "orange",
     };
 
+    const leaderboardCopy = [...leaderboard];
+
+    const sortedLeaderboard = leaderboardCopy.sort(
+        (a, b) =>
+            b.score_section_1 +
+            b.score_section_2 -
+            a.score_section_1 +
+            a.score_section_2
+    );
+
     return (
         <>
             {" "}
@@ -66,7 +76,7 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                         </Th>
                     </Tr>
                     <Tbody>
-                        {leaderboard.map((rank, index) => (
+                        {sortedLeaderboard.map((rank, index) => (
                             <Tr key={index}>
                                 <Td
                                     textAlign={"center"}

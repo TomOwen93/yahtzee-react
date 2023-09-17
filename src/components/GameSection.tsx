@@ -217,6 +217,7 @@ export default function GameSection(): JSX.Element {
                     Rolls Left: {gameState.rollsLeft}
                 </Heading>
                 <Button
+                    variant={"outline"}
                     size={{ base: "sm", lg: "md" }}
                     onClick={() => dispatch({ type: "roll-dice" })}
                 >
