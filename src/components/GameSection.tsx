@@ -283,8 +283,12 @@ export default function GameSection(): JSX.Element {
                 </Card>
                 <Tabs>
                     <TabList justifyContent={"center"}>
-                        <Tab>Game</Tab>
-                        <Tab>Leaderboard</Tab>
+                        <Tab fontSize={{ base: "1rem", lg: "1.5rem" }}>
+                            Game
+                        </Tab>
+                        <Tab fontSize={{ base: "1rem", lg: "1.5rem" }}>
+                            Leaderboard
+                        </Tab>
                     </TabList>
 
                     <TabPanels>

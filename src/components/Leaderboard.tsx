@@ -27,7 +27,7 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
             {" "}
             <Heading textAlign={"center"}>Current Leaderboard:</Heading>
             <TableContainer>
-                <Table size={"sm"} margin={"auto"}>
+                <Table size={{ base: "sm", lg: "lg" }} margin={"auto"}>
                     <Tr>
                         <Th
                             whiteSpace={"normal"}
