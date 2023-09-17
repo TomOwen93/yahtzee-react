@@ -193,18 +193,19 @@ export default function GameSection(): JSX.Element {
         return rollA - rollB;
     });
 
-    const handleSubmitScore = async () => {
-        await axios.post(`${baseUrl}/leaderboard`, {
-            username: gameState.Player1.username,
-            score_section_1: currentTotalSection1,
-            score_section_2: currentTotalSection2,
-        });
-    };
-
     const playersScores = gameState.Player1.scoringChecks;
     const bonusPoints = gameState.Player1.bonusPoints;
     const currentTotalSection1 = calculateTotals(1, playersScores);
     const currentTotalSection2 = calculateTotals(2, playersScores);
+
+    const handleSubmitScore = async () => {
+        const section1Score = currentTotalSection1 + bonusPoints;
+        await axios.post(`${baseUrl}/leaderboard`, {
+            username: gameState.Player1.username,
+            score_section_1: section1Score,
+            score_section_2: currentTotalSection2,
+        });
+    };
 
     return (
         <>
