@@ -22,14 +22,15 @@ function App(): JSX.Element {
     return (
         <>
             <Flex
-                justifyContent={{ base: "center", lg: "space-between" }}
-                w={"100vw"}
+                w={{ base: "100%", lg: "auto" }}
+                alignItems="center"
                 flexDirection={{ base: "column", lg: "row" }}
+                justifyContent={{ base: "center", lg: "space-between" }}
             >
                 <Button
                     marginTop="0.5rem"
                     marginLeft={{ base: "auto", lg: "0.5rem" }}
-                    marginRight={{ base: "auto", lg: "" }}
+                    marginRight={{ base: "auto", lg: "0.5rem" }}
                     onClick={toggleColorMode}
                     mb={{ base: 1, lg: 2 }}
                     width={{ base: "20rem", lg: "auto" }}
@@ -39,23 +40,23 @@ function App(): JSX.Element {
 
                 <Heading
                     mb={{ base: 1, lg: 2 }}
-                    marginLeft={{ base: "auto", lg: "15rem" }}
-                    marginRight={{ base: "auto", lg: "" }}
+                    marginLeft={{ base: "0.5rem", lg: "5%" }}
                     fontSize={{ base: "2rem", lg: "2.5rem" }}
                 >
                     Let's Play Yahtzee!
                 </Heading>
 
                 <Flex
-                    align={{ base: "center" }}
-                    margin={"auto"}
-                    gap={{ base: "0.5rem" }}
+                    flexDirection={"row"}
+                    gap={{ base: "0.5rem", lg: "auto" }}
                 >
                     <Popover>
                         <PopoverTrigger>
                             <Button
                                 size={{ base: "sm", lg: "md" }}
                                 mb={{ base: 1, lg: 2 }}
+                                marginLeft={{ base: "auto" }}
+                                marginRight={{ base: "auto" }}
                             >
                                 Rules
                             </Button>
@@ -77,7 +78,8 @@ function App(): JSX.Element {
                             <Button
                                 size={{ base: "sm", lg: "md" }}
                                 mb={{ base: 1, lg: 2 }}
-                                marginLeft={{ base: "auto", lg: "0.5rem" }}
+                                marginLeft={{ base: "auto" }}
+                                marginRight={{ base: "auto", lg: "1rem" }}
                             >
                                 Scoring Categories
                             </Button>
