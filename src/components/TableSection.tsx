@@ -8,6 +8,7 @@ import {
     Td,
     Text,
     Tag,
+    Tooltip,
 } from "@chakra-ui/react";
 import { Action, GameState, PotentialFullScoring } from "../types";
 import { CombinedSectionLookup } from "./ScoreTable";
@@ -158,16 +159,17 @@ export default function TableSection({
                                         textAlign={"center"}
                                         fontWeight="bold"
                                     >
-                                        Total Points:
+                                        Section 1 Points:
                                     </Td>
-                                    <Td textAlign={"center"}>
-                                        <Tag
-                                            fontSize={"0.75rem"}
-                                            size={"md"}
-                                            colorScheme="yellow"
-                                        >
-                                            {totalScore}
-                                        </Tag>
+                                    <Td
+                                        textAlign={"center"}
+                                        fontWeight={"bold"}
+                                        fontSize={{
+                                            base: "0.75rem",
+                                            lg: "1rem",
+                                        }}
+                                    >
+                                        {totalScore}
                                     </Td>
                                 </>
                             ) : (
@@ -180,7 +182,7 @@ export default function TableSection({
                                         fontWeight="bold"
                                         textAlign={"center"}
                                     >
-                                        Total Points Section 2:
+                                        Total Section 2:
                                     </Td>
 
                                     <Td
@@ -191,9 +193,12 @@ export default function TableSection({
                                         textAlign={"center"}
                                     >
                                         <Tag
-                                            fontSize={"0.75rem"}
+                                            fontSize={{
+                                                base: "0.75rem",
+                                                lg: "1rem",
+                                            }}
                                             size={"md"}
-                                            colorScheme="green"
+                                            colorScheme="pink"
                                         >
                                             {totalScore}
                                         </Tag>
@@ -203,26 +208,25 @@ export default function TableSection({
                         </Tr>
                         {section === 1 && (
                             <Tr>
-                                <Td
-                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
-                                    fontWeight="bold"
-                                    textAlign={"center"}
-                                >
-                                    Bonus Points:{" "}
-                                </Td>
-                                <Td
-                                    fontSize={{ base: "0.8rem", lg: "1rem" }}
-                                    fontWeight="bold"
-                                    textAlign={"center"}
-                                >
-                                    <Tag
-                                        fontSize={"0.75rem"}
-                                        size={"md"}
-                                        colorScheme="yellow"
+                                <Tooltip label="Score at least 63 in Section 1 to receive 35 additional points!">
+                                    <Td
+                                        cursor={"help"}
+                                        fontSize={{
+                                            base: "0.8rem",
+                                            lg: "1rem",
+                                        }}
+                                        fontWeight="bold"
+                                        textAlign={"center"}
                                     >
-                                        {" "}
-                                        {bonusPoints}
-                                    </Tag>
+                                        Bonus Points:
+                                    </Td>
+                                </Tooltip>
+                                <Td
+                                    fontSize={{ base: "0.75rem", lg: "1rem" }}
+                                    fontWeight="bold"
+                                    textAlign={"center"}
+                                >
+                                    {bonusPoints}
                                 </Td>
                             </Tr>
                         )}
@@ -242,7 +246,10 @@ export default function TableSection({
                                     textAlign={"center"}
                                 >
                                     <Tag
-                                        fontSize={"0.75rem"}
+                                        fontSize={{
+                                            base: "0.75rem",
+                                            lg: "1rem",
+                                        }}
                                         size={"md"}
                                         colorScheme="green"
                                     >

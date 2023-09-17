@@ -132,9 +132,12 @@ export default function ScoreTable({
                             <Tr>
                                 <Td textAlign={"center"}>
                                     <Tag
-                                        fontSize={"1rem"}
+                                        fontSize={{
+                                            base: "0.75rem",
+                                            lg: "1rem",
+                                        }}
                                         size={"md"}
-                                        colorScheme="green"
+                                        colorScheme="yellow"
                                         textAlign={"center"}
                                     >
                                         {currentTotalSection1 +

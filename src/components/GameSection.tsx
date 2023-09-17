@@ -150,7 +150,7 @@ export default function GameSection(): JSX.Element {
         handleFetchLeaderboard().then((res) =>
             dispatch({ type: "refresh-leaderboard", payload: res })
         );
-    }, [isOpen, dispatch]);
+    }, [isOpen, dispatch, onClose]);
 
     const combinedDice = gameState.rolledDice.concat(gameState.keptDice);
     const [potentialScores, sectionOneScores, sectionTwoScores] =
@@ -230,7 +230,7 @@ export default function GameSection(): JSX.Element {
                             gameState.rolledDice.map((d) => (
                                 <Button
                                     w={"4rem"}
-                                    h={"4rem"}
+                                    h={{ base: "3rem", lg: "4rem" }}
                                     onClick={() =>
                                         dispatch({
                                             type: "keep-dice",
@@ -240,7 +240,10 @@ export default function GameSection(): JSX.Element {
                                     justifyContent="center"
                                     alignItems={"center"}
                                     key={d.id}
-                                    fontSize={"xxx-large"}
+                                    fontSize={{
+                                        base: "xx-large",
+                                        lg: "xxx-large",
+                                    }}
                                 >
                                     {" "}
                                     {d.roll !== null
@@ -260,12 +263,15 @@ export default function GameSection(): JSX.Element {
                                     })
                                 }
                                 w={"4rem"}
-                                h={"4rem"}
+                                h={{ base: "3rem", lg: "4rem" }}
                                 justifyContent="center"
                                 alignItems={"center"}
                                 textAlign={"center"}
                                 key={d.id}
-                                fontSize={"xxx-large"}
+                                fontSize={{
+                                    base: "xx-large",
+                                    lg: "xxx-large",
+                                }}
                                 mb={{ base: 1, lg: 2 }}
                             >
                                 {d.roll !== null
