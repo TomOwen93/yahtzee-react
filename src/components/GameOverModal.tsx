@@ -1,5 +1,6 @@
 import {
     Button,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -13,6 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { Action, GameState } from "../types";
 import { calculateTotals } from "../utils/calculateTotals";
+import axios from "axios";
+import { baseUrl } from "../utils/baseUrl";
+import { useState } from "react";
 
 interface GameOverModalProps {
     gameState: GameState;
@@ -28,6 +32,7 @@ export const GameOverModal = ({
     onClose,
 }: GameOverModalProps): JSX.Element => {
     const { isOpen } = useDisclosure();
+    const [hiscoresUsername, setHiscoresUsername] = useState("");
 
     const bonusPoints = gameState.Player1.bonusPoints;
     const playersScores = gameState.Player1.scoringChecks;
@@ -39,6 +44,14 @@ export const GameOverModal = ({
     const handleCloseMenu = () => {
         onClose();
         dispatch({ type: "next-turn" });
+    };
+
+    const handleSubmitScore = async () => {
+        await axios.post(`${baseUrl}/leaderboard`, {
+            username: hiscoresUsername,
+            score_section_1: currentTotalSection1,
+            score_section_2: currentTotalSection2,
+        });
     };
 
     return (
@@ -93,13 +106,21 @@ export const GameOverModal = ({
                     </ModalBody>
 
                     <ModalFooter justifyContent={"center"}>
+                        <Button onClick={handleSubmitScore}> </Button>
                         <Button
                             colorScheme="blue"
                             mr={3}
                             onClick={handleCloseMenu}
                         >
-                            Try Again?
+                            Try wwAgain?
                         </Button>
+                        <Input
+                            onChange={(e) =>
+                                setHiscoresUsername(e.target.value)
+                            }
+                            value={hiscoresUsername}
+                            placeholder="Input Username for Hiscores"
+                        ></Input>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

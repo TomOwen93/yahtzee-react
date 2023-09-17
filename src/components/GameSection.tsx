@@ -2,7 +2,9 @@ import {
     Button,
     Card,
     Flex,
+    HStack,
     Heading,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -10,6 +12,11 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
     Tag,
     Text,
     VStack,
@@ -21,6 +28,9 @@ import { calculatePotentialScores } from "../utils/calculatePotentialScores";
 import { calculateTotals } from "../utils/calculateTotals";
 import ScoreTable from "./ScoreTable";
 import { useEffect } from "react";
+import axios from "axios";
+import { baseUrl } from "../utils/baseUrl";
+import { Leaderboard } from "./Leaderboard";
 
 export default function GameSection(): JSX.Element {
     const initialState: GameState = {
@@ -34,6 +44,7 @@ export default function GameSection(): JSX.Element {
             { id: 5, roll: null },
         ],
         Player1: {
+            username: "",
             previousYahtzee: false,
             bonusPoints: 0,
             scoringChecks: {
@@ -53,6 +64,7 @@ export default function GameSection(): JSX.Element {
             },
         },
         keptDice: [],
+        leaderboard: [],
     };
 
     const reducer = (state: GameState, action: Action) => {
@@ -117,14 +129,30 @@ export default function GameSection(): JSX.Element {
             case "bonus-points":
                 state.Player1.bonusPoints = 35;
                 break;
+            case "set-username":
+                state.Player1.username = action.payload;
+                break;
+            case "refresh-leaderboard":
+                state.leaderboard = action.payload;
+                break;
         }
     };
 
     const [gameState, dispatch] = useImmerReducer(reducer, initialState);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const combinedDice = gameState.rolledDice.concat(gameState.keptDice);
+    const handleFetchLeaderboard = async () => {
+        const response = await axios.get(`${baseUrl}/leaderboard`);
+        return response.data;
+    };
 
+    useEffect(() => {
+        handleFetchLeaderboard().then((res) =>
+            dispatch({ type: "refresh-leaderboard", payload: res })
+        );
+    }, [isOpen, dispatch]);
+
+    const combinedDice = gameState.rolledDice.concat(gameState.keptDice);
     const [potentialScores, sectionOneScores, sectionTwoScores] =
         calculatePotentialScores(
             combinedDice,
@@ -164,6 +192,14 @@ export default function GameSection(): JSX.Element {
 
         return rollA - rollB;
     });
+
+    const handleSubmitScore = async () => {
+        await axios.post(`${baseUrl}/leaderboard`, {
+            username: gameState.Player1.username,
+            score_section_1: currentTotalSection1,
+            score_section_2: currentTotalSection2,
+        });
+    };
 
     const playersScores = gameState.Player1.scoringChecks;
     const bonusPoints = gameState.Player1.bonusPoints;
@@ -239,14 +275,32 @@ export default function GameSection(): JSX.Element {
                         ))}
                     </Flex>
                 </Card>
+                <Tabs>
+                    <TabList justifyContent={"center"}>
+                        <Tab>Game</Tab>
+                        <Tab>Leaderboard</Tab>
+                    </TabList>
 
-                <ScoreTable
-                    gameState={gameState}
-                    dispatch={dispatch}
-                    potentialScores={potentialScores}
-                    sectionOneScores={sectionOneScores}
-                    sectionTwoScores={sectionTwoScores}
-                />
+                    <TabPanels>
+                        <TabPanel>
+                            <ScoreTable
+                                gameState={gameState}
+                                dispatch={dispatch}
+                                potentialScores={potentialScores}
+                                sectionOneScores={sectionOneScores}
+                                sectionTwoScores={sectionTwoScores}
+                            />
+                        </TabPanel>
+
+                        <TabPanel>
+                            {" "}
+                            <Leaderboard
+                                dispatch={dispatch}
+                                leaderboard={gameState.leaderboard}
+                            />
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
             </VStack>
 
             <Modal
@@ -320,13 +374,38 @@ export default function GameSection(): JSX.Element {
                     </ModalBody>
 
                     <ModalFooter justifyContent={"center"}>
-                        <Button
-                            colorScheme="blue"
-                            mr={3}
-                            onClick={handleCloseMenu}
-                        >
-                            Try Again?
-                        </Button>
+                        <VStack>
+                            <Button
+                                colorScheme="blue"
+                                mr={3}
+                                onClick={handleCloseMenu}
+                            >
+                                Try Again?
+                            </Button>
+
+                            <HStack>
+                                <Input
+                                    onChange={(e) =>
+                                        dispatch({
+                                            type: "set-username",
+                                            payload: e.target.value,
+                                        })
+                                    }
+                                    value={gameState.Player1.username}
+                                    placeholder="Input name for leaderboard..."
+                                    w={"15rem"}
+                                ></Input>
+                                <Button
+                                    fontSize={"0.7 rem"}
+                                    onClick={() => {
+                                        handleSubmitScore();
+                                        handleCloseMenu();
+                                    }}
+                                >
+                                    Submit High Score
+                                </Button>
+                            </HStack>
+                        </VStack>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

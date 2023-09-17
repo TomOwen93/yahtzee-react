@@ -29,6 +29,16 @@ export interface BonusPointsAction {
     type: "bonus-points";
 }
 
+export interface SetUsernameAction {
+    type: "set-username";
+    payload: string;
+}
+
+export interface RefreshLeaderboardAction {
+    type: "refresh-leaderboard";
+    payload: LeaderboardList[];
+}
+
 export type Action =
     | RollDiceAction
     | KeepDiceAction
@@ -36,8 +46,9 @@ export type Action =
     | LockInScoreAction
     | NextTurnAction
     | EndGameAction
-    | BonusPointsAction;
-
+    | BonusPointsAction
+    | SetUsernameAction
+    | RefreshLeaderboardAction;
 export type Dice = {
     id: number;
     roll: null | DiceRoll;
@@ -46,6 +57,7 @@ export type Dice = {
 export type DiceRoll = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface Player {
+    username: string;
     bonusPoints: number;
     previousYahtzee: boolean;
     scoringChecks: PotentialFullScoring;
@@ -97,8 +109,18 @@ export interface PotentialSectionTwoScoring {
 
 export interface GameState {
     gameTurn: number;
+    leaderboard: LeaderboardList[];
     rollsLeft: number;
     rolledDice: Dice[];
     Player1: Player;
     keptDice: Dice[];
+}
+
+export interface LeaderboardList {
+    creation_date: Date;
+    id: number;
+    score_section_1: number;
+    score_section_2: number;
+    user_id: number;
+    username: string;
 }
