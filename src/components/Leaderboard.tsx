@@ -28,8 +28,7 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
         (a, b) =>
             b.score_section_1 +
             b.score_section_2 -
-            a.score_section_1 +
-            a.score_section_2
+            (a.score_section_1 + a.score_section_2)
     );
 
     return (
