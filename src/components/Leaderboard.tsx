@@ -86,7 +86,11 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                                 >
                                     {index + 1}
                                 </Td>
-                                <Td textAlign={"center"}>{rank.username}</Td>
+                                <Td textAlign={"center"}>
+                                    {rank.username === ""
+                                        ? `Anonymous`
+                                        : rank.username}
+                                </Td>
                                 <Td textAlign={"center"}>
                                     <Tag
                                         fontSize={"0.8rem"}
@@ -125,7 +129,10 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                                             moment(rank.creation_date),
                                             "days"
                                         ) === 0
-                                            ? `Today`
+                                            ? `${moment().diff(
+                                                  moment(rank.creation_date),
+                                                  "hours"
+                                              )} hours ago`
                                             : `${moment().diff(
                                                   moment(rank.creation_date),
                                                   "days"
