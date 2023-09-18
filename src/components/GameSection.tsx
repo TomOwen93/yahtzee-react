@@ -109,22 +109,7 @@ export default function GameSection(): JSX.Element {
                 state.keptDice = [];
                 break;
             case "end-game":
-                state.Player1.scoringChecks = {
-                    ones: null,
-                    twos: null,
-                    threes: null,
-                    fours: null,
-                    fives: null,
-                    sixes: null,
-                    threeOfAKind: null,
-                    fourOfAKind: null,
-                    fullHouse: null,
-                    smallStraight: null,
-                    largeStraight: null,
-                    yahtzee: null,
-                    chance: null,
-                };
-
+                state.Player1 = initialState.Player1;
                 break;
             case "bonus-points":
                 state.Player1.bonusPoints = 35;
