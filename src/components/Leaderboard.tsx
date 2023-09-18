@@ -6,6 +6,7 @@ import {
     Tbody,
     Td,
     Th,
+    Thead,
     Tr,
 } from "@chakra-ui/react";
 import { Action, LeaderboardList } from "../types";
@@ -37,43 +38,45 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
             <Heading textAlign={"center"}>Current Leaderboard:</Heading>
             <TableContainer>
                 <Table size={{ base: "sm", lg: "lg" }} margin={"auto"}>
-                    <Tr>
-                        <Th
-                            whiteSpace={"normal"}
-                            textAlign={"center"}
-                            paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                        >
-                            Rank
-                        </Th>
-                        <Th
-                            whiteSpace={"normal"}
-                            textAlign={"center"}
-                            paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                        >
-                            Username
-                        </Th>
-                        <Th
-                            whiteSpace={"normal"}
-                            textAlign={"center"}
-                            paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                        >
-                            Score Section 1
-                        </Th>
-                        <Th
-                            whiteSpace={"normal"}
-                            textAlign={"center"}
-                            paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                        >
-                            Score Section 2
-                        </Th>
-                        <Th
-                            whiteSpace={"normal"}
-                            textAlign={"center"}
-                            paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                        >
-                            Total Score
-                        </Th>
-                    </Tr>
+                    <Thead>
+                        <Tr>
+                            <Th
+                                whiteSpace={"normal"}
+                                textAlign={"center"}
+                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
+                            >
+                                Rank
+                            </Th>
+                            <Th
+                                whiteSpace={"normal"}
+                                textAlign={"center"}
+                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
+                            >
+                                Username
+                            </Th>
+                            <Th
+                                whiteSpace={"normal"}
+                                textAlign={"center"}
+                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
+                            >
+                                Score Section 1
+                            </Th>
+                            <Th
+                                whiteSpace={"normal"}
+                                textAlign={"center"}
+                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
+                            >
+                                Score Section 2
+                            </Th>
+                            <Th
+                                whiteSpace={"normal"}
+                                textAlign={"center"}
+                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
+                            >
+                                Total Score
+                            </Th>
+                        </Tr>
+                    </Thead>
                     <Tbody>
                         {sortedLeaderboard.map((rank, index) => (
                             <Tr key={index}>
