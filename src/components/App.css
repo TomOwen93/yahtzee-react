@@ -3,3 +3,14 @@ html {
     height: 100%;
     width: 100%;
 }
+
+.table-tiny th,
+.table-tiny td {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.table-tiny th {
+    text-align: center;
+    font-size: x-small;
+}
