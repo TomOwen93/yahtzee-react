@@ -195,22 +195,28 @@ export default function GameSection(): JSX.Element {
     return (
         <>
             <VStack>
-                <Heading
-                    as="h3"
-                    size={{ base: "sm", lg: "md" }}
-                    color={gameState.rollsLeft <= 1 ? "red" : "white"}
-                >
-                    Rolls Left: {gameState.rollsLeft}
-                </Heading>
                 <Button
                     variant={"outline"}
+                    colorScheme="blue"
                     size={{ base: "sm", lg: "md" }}
                     onClick={() => dispatch({ type: "roll-dice" })}
+                    mb={{ base: 1, lg: 2 }}
+                    mt={{ base: 1, lg: 2 }}
                 >
                     Roll Dice
                 </Button>
 
                 <Card justify={"center"} align={"center"} w="100vw">
+                    <Heading
+                        as="h3"
+                        size={{ base: "sm", lg: "md" }}
+                        color={gameState.rollsLeft <= 1 ? "red" : "white"}
+                        mb={{ base: 1, lg: 2 }}
+                        mt={{ base: 1, lg: 2 }}
+                    >
+                        Rolls Left: {gameState.rollsLeft}
+                    </Heading>
+
                     <Text>You rolled:</Text>
                     <Flex gap={"0.75rem"} minH={"4rem"}>
                         {gameState.rollsLeft < 3 &&

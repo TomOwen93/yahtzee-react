@@ -43,7 +43,7 @@ function App(): JSX.Element {
                     marginLeft={{ base: "0.5rem", lg: "5%" }}
                     fontSize={{ base: "2rem", lg: "2.5rem" }}
                 >
-                    Let's Play Yahtzee!
+                    Yahtzee Online
                 </Heading>
 
                 <Flex

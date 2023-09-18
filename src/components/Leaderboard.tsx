@@ -8,8 +8,10 @@ import {
     Th,
     Thead,
     Tr,
+    useMediaQuery,
 } from "@chakra-ui/react";
 import { Action, LeaderboardList } from "../types";
+import moment from "moment";
 
 interface LeaderboardProps {
     leaderboard: LeaderboardList[];
@@ -32,48 +34,41 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
             (a.score_section_1 + a.score_section_2)
     );
 
+    const [isLargerThanlg] = useMediaQuery("(min-width: 992px)");
+
     return (
         <>
             {" "}
             <Heading textAlign={"center"}>Current Leaderboard:</Heading>
             <TableContainer>
-                <Table size={{ base: "sm", lg: "lg" }} margin={"auto"}>
+                <Table
+                    className={isLargerThanlg ? "" : "table-tiny"}
+                    size={{ base: "sm", lg: "lg" }}
+                    margin={"auto"}
+                >
                     <Thead>
                         <Tr>
-                            <Th
-                                whiteSpace={"normal"}
-                                textAlign={"center"}
-                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                            >
+                            <Th whiteSpace={"normal"} textAlign={"center"}>
                                 Rank
                             </Th>
-                            <Th
-                                whiteSpace={"normal"}
-                                textAlign={"center"}
-                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                            >
+                            <Th whiteSpace={"normal"} textAlign={"center"}>
                                 Username
                             </Th>
                             <Th
                                 whiteSpace={"normal"}
                                 textAlign={"center"}
-                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
+                                paddingInlineStart={0}
                             >
                                 Score Section 1
                             </Th>
-                            <Th
-                                whiteSpace={"normal"}
-                                textAlign={"center"}
-                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                            >
+                            <Th whiteSpace={"normal"} textAlign={"center"}>
                                 Score Section 2
                             </Th>
-                            <Th
-                                whiteSpace={"normal"}
-                                textAlign={"center"}
-                                paddingInline={{ base: "0.5rem", lg: "0.5rem" }}
-                            >
+                            <Th whiteSpace={"normal"} textAlign={"center"}>
                                 Total Score
+                            </Th>
+                            <Th whiteSpace={"normal"} textAlign={"center"}>
+                                Submitted
                             </Th>
                         </Tr>
                     </Thead>
@@ -118,6 +113,23 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                                     >
                                         {rank.score_section_1 +
                                             rank.score_section_2}{" "}
+                                    </Tag>
+                                </Td>
+                                <Td textAlign={"center"}>
+                                    <Tag
+                                        fontSize={"0.8rem"}
+                                        size={"md"}
+                                        colorScheme="facebook"
+                                    >
+                                        {moment().diff(
+                                            moment(rank.creation_date),
+                                            "days"
+                                        ) === 0
+                                            ? `Today`
+                                            : `${moment().diff(
+                                                  moment(rank.creation_date),
+                                                  "days"
+                                              )} days ago`}
                                     </Tag>
                                 </Td>
                             </Tr>
