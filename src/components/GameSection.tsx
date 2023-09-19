@@ -21,9 +21,16 @@ import {
     Text,
     VStack,
     useDisclosure,
+    useToast,
 } from "@chakra-ui/react";
 import { useImmerReducer } from "use-immer";
-import { Action, DiceRoll, GameState, PotentialFullScoring } from "../types";
+import {
+    Action,
+    DiceRoll,
+    GameState,
+    LeaderboardList,
+    PotentialFullScoring,
+} from "../types";
 import { calculatePotentialScores } from "../utils/calculatePotentialScores";
 import { calculateTotals } from "../utils/calculateTotals";
 import ScoreTable from "./ScoreTable";
@@ -31,8 +38,10 @@ import { useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../utils/baseUrl";
 import { Leaderboard } from "./Leaderboard";
+import { io } from "socket.io-client";
 
 export default function GameSection(): JSX.Element {
+    const toast = useToast();
     const initialState: GameState = {
         gameTurn: 0,
         rollsLeft: 3,
@@ -136,6 +145,37 @@ export default function GameSection(): JSX.Element {
             dispatch({ type: "refresh-leaderboard", payload: res })
         );
     }, [isOpen, dispatch, onClose]);
+
+    useEffect(() => {
+        const newSocket = io(baseUrl);
+        newSocket.connect();
+        newSocket.on(
+            "new-score",
+            (payload: { data: LeaderboardList; name: string }) => {
+                toast({
+                    title: "New Score Registered!",
+                    description: `Username: ${
+                        payload.name
+                    } \n has submitted a score of ${
+                        payload.data.score_section_1 +
+                        payload.data.score_section_2
+                    }!`,
+                    status: "info",
+                    duration: 3000,
+                    isClosable: true,
+                });
+                handleFetchLeaderboard().then((res) =>
+                    dispatch({ type: "refresh-leaderboard", payload: res })
+                );
+            }
+        );
+
+        function cleanup() {
+            newSocket.disconnect();
+        }
+
+        return cleanup;
+    }, [toast, dispatch]);
 
     const combinedDice = gameState.rolledDice.concat(gameState.keptDice);
     const [potentialScores, sectionOneScores, sectionTwoScores] =
