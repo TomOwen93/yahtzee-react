@@ -21,7 +21,7 @@ import {
     PotentialSectionTwoScoring,
 } from "../types";
 
-import { calculateTotals } from "../utils/calculateTotals";
+import { calculateTotals } from "../scoring-functions/calculateTotals";
 import TableSection from "./TableSection";
 
 interface ScoreTableProps {

@@ -31,12 +31,12 @@ import {
     LeaderboardList,
     PotentialFullScoring,
 } from "../types";
-import { calculatePotentialScores } from "../utils/calculatePotentialScores";
-import { calculateTotals } from "../utils/calculateTotals";
+import { calculatePotentialScores } from "../scoring-functions/calculatePotentialScores";
+import { calculateTotals } from "../scoring-functions/calculateTotals";
 import ScoreTable from "./ScoreTable";
 import { useEffect } from "react";
 import axios from "axios";
-import { baseUrl } from "../utils/baseUrl";
+import { baseUrl } from "../util-functions/baseUrl";
 import { Leaderboard } from "./Leaderboard";
 import { io } from "socket.io-client";
 
