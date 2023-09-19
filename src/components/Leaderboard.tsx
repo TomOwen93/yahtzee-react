@@ -9,9 +9,13 @@ import {
     Thead,
     Tr,
     useMediaQuery,
+    useToast,
 } from "@chakra-ui/react";
 import { Action, LeaderboardList } from "../types";
 import moment from "moment";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
+import { baseUrl } from "../utils/baseUrl";
 
 interface LeaderboardProps {
     leaderboard: LeaderboardList[];
@@ -19,6 +23,7 @@ interface LeaderboardProps {
 }
 
 export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
+    const toast = useToast();
     const ranksColors = {
         1: "gold",
         2: "silver",
@@ -35,6 +40,34 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
     );
 
     const [isLargerThanlg] = useMediaQuery("(min-width: 992px)");
+
+    useEffect(() => {
+        const newSocket = io(baseUrl);
+        newSocket.connect();
+        newSocket.on(
+            "new-score",
+            (payload: { data: LeaderboardList; name: string }) => {
+                toast({
+                    title: "New Score Registered!",
+                    description: `Username: ${
+                        payload.name
+                    } \n has submitted a score of ${
+                        payload.data.score_section_1 +
+                        payload.data.score_section_2
+                    }!`,
+                    status: "info",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
+        );
+
+        function cleanup() {
+            newSocket.disconnect();
+        }
+
+        return cleanup;
+    }, [toast]);
 
     return (
         <>
