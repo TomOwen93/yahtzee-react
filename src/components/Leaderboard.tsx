@@ -76,7 +76,7 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                         {sortedLeaderboard.map((rank, index) => (
                             <Tr key={index}>
                                 <Td
-                                    textAlign={"center"}
+                                    textAlign={"left"}
                                     color={
                                         ranksColors[
                                             (index +
@@ -86,12 +86,12 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                                 >
                                     {index + 1}
                                 </Td>
-                                <Td textAlign={"center"}>
+                                <Td textAlign={"left"}>
                                     {rank.username === ""
                                         ? `Anonymous`
                                         : rank.username}
                                 </Td>
-                                <Td textAlign={"center"}>
+                                <Td textAlign={"left"}>
                                     <Tag
                                         fontSize={"0.8rem"}
                                         size={"md"}
@@ -100,7 +100,7 @@ export const Leaderboard = ({ leaderboard }: LeaderboardProps): JSX.Element => {
                                         {rank.score_section_1}{" "}
                                     </Tag>
                                 </Td>
-                                <Td textAlign={"center"}>
+                                <Td textAlign={"left"}>
                                     <Tag
                                         fontSize={"0.8rem"}
                                         size={"md"}

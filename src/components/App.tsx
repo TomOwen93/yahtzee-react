@@ -10,7 +10,12 @@ import {
     PopoverHeader,
     PopoverTrigger,
     useColorMode,
+    useToast,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
+import { LeaderboardList } from "../types";
+import { baseUrl } from "../utils/baseUrl";
 import "./App.css";
 import { CategoryRules } from "./CategoryRules";
 import GameSection from "./GameSection";
@@ -18,6 +23,31 @@ import { GeneralRules } from "./GeneralRules";
 
 function App(): JSX.Element {
     const { colorMode, toggleColorMode } = useColorMode();
+    const toast = useToast();
+
+    useEffect(() => {
+        const newSocket = io(baseUrl, { transports: ["websocket"] });
+        newSocket.connect();
+        newSocket.on("new-score", (data: LeaderboardList) => {
+            toast({
+                title: "New Score Registered!",
+                description: `Username: ${
+                    data.username
+                } \n has submitted a score of ${
+                    data.score_section_1 + data.score_section_2
+                }!`,
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        });
+
+        function cleanup() {
+            newSocket.disconnect();
+        }
+
+        return cleanup;
+    }, [toast]);
 
     return (
         <>
